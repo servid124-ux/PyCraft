@@ -32,7 +32,7 @@
 
 ```bash
 pkg install python unzip
-wget https://github.com/servid124-ux/PyCraft_v0.2.3/releases/download/v0.2.5/PyCraft_v0.2.5.zip
+wget https://github.com/user-attachments/files/29228849/PyCraft_v0.2.5.zip 
 unzip PyCraft_v0.2.5.zip -d PyCraft
 cd PyCraft
 sh Start.sh
@@ -42,7 +42,7 @@ sh Start.sh
 
 ```bash
 sudo apt install python3 unzip wget
-wget https://github.com/servid124-ux/PyCraft_v0.2.3/releases/download/v0.2.5/PyCraft_v0.2.5.zip
+wget https://github.com/user-attachments/files/29228849/PyCraft_v0.2.5.zip
 unzip PyCraft_v0.2.5.zip -d PyCraft
 cd PyCraft
 sh Start.sh
