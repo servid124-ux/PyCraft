@@ -11,7 +11,7 @@
 
 **Minecraft Classic server — built from scratch in Python**
 
-![Version](https://img.shields.io/badge/version-0.2.6-blue?style=flat-square)
+![Version](https://img.shields.io/badge/version-0.2.7-blue?style=flat-square)
 ![Protocol](https://img.shields.io/badge/protocol-Classic%200x07-green?style=flat-square)
 ![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20Termux-orange?style=flat-square)
 ![Python](https://img.shields.io/badge/python-3.10%2B-yellow?style=flat-square)
@@ -30,8 +30,8 @@ PyCraft is a Minecraft Classic server written entirely in Python, compatible wit
 
 ```bash
 pkg install python unzip
-wget https://github.com/user-attachments/files/29273640/PyCraft_v0.2.6.zip
-unzip PyCraft_v0.2.6.zip -d PyCraft && cd PyCraft
+wget https://github.com/user-attachments/files/29407007/PyCraft_v0_2_7.zip
+unzip PyCraft_v0.2.7.zip -d PyCraft && cd PyCraft
 sh Start.sh
 ```
 
@@ -39,8 +39,8 @@ sh Start.sh
 
 ```bash
 sudo apt install python3 unzip wget
-wget https://github.com/user-attachments/files/29273640/PyCraft_v0.2.6.zip
-unzip PyCraft_v0.2.6.zip -d PyCraft && cd PyCraft
+wget https://github.com/user-attachments/files/29407007/PyCraft_v0_2_7.zip
+unzip PyCraft_v0.2.7.zip -d PyCraft && cd PyCraft
 sh Start.sh
 ```
 
@@ -121,15 +121,44 @@ class MyPlugin(Plugin):
         self.log("Hello from MyPlugin!")
 ```
 
+Two example plugins are included in the `plugins/` folder:
+
+**Login** — optional account system with `/register` and `/login`. Passwords are hashed with PBKDF2-SHA256 (200k iterations). Unauthenticated players are frozen until they log in. The server itself has no built-in password system — drop this plugin to enable it.
+
+**Homes** — home teleportation with `/sethome [name]`, `/home [name]`, `/delhome <name>`, and `/homes`. Configurable max homes per player.
+
 ---
 
 ## CPE
 
-PyCraft supports the **CustomBlocks** extension (level 1). ClassiCube clients negotiate this automatically — no setup needed. Adds 16 extra blocks (IDs 50–65): Sandstone, Snow, Ice, Cactus, Magma, Pillar, and more.
+PyCraft supports the **CustomBlocks** extension (level 1). ClassiCube clients negotiate this automatically — no setup needed.
+
+All 16 CPE blocks (IDs 50–65) are fully defined with correct `CollideType` and `DrawType` values derived from the ClassiCube client source:
+
+| ID | Name | ID | Name |
+|----|------|----|------|
+| 50 | Cobblestone Slab | 58 | Deep Blue |
+| 51 | Rope | 59 | Turquoise |
+| 52 | Sandstone | 60 | Ice |
+| 53 | Snow | 61 | Ceramic Tile |
+| 54 | Fire | 62 | Magma |
+| 55 | Light Pink | 63 | Pillar |
+| 56 | Forest Green | 64 | Crate |
+| 57 | Brown | 65 | Stone Brick |
+
+Special properties: Ice uses `CollideType.ICE` (slippery), Rope uses `CollideType.CLIMB`, Magma and Fire emit light, Water/Lava use `CollideType.WATER`/`LAVA`.
 
 ---
 
 ## Changelog
+
+**v0.2.7**
+— Corrected all CPE block definitions (IDs 50–65) with proper `CollideType` and `DrawType` enumerations from ClassiCube source  
+— Added `BlockID` class with named constants for all 66 blocks (0–65) and `CPE_MIN`/`CPE_MAX` sentinels  
+— Added `block/ids.py`, `block/fluids.py` (fluid simulation tick), `block/gravity.py` (sand/gravel fall)  
+— Added `_ansi.py` —colored logger shared by server, plugin manager, and plugins  
+— Added example `Login` plugin (PBKDF2-SHA256 password hashing, player freeze on join)  
+— Added example `Homes` plugin (`/sethome`, `/home`, `/delhome`, `/homes` with configurable limits)
 
 **v0.2.6**
 — Fixed `BufferUnderrun` crash on player movement (`PlayerTeleport 0x08` body size corrected)
